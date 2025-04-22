@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E_Commerce.Server", "E_Commerce.Server\E_Commerce.Server.csproj", "{B457676B-D38A-4827-8810-2AC0725666B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E_Commerce.Server", "E_Commerce.Server\E_Commerce.Server.csproj", "{B457676B-D38A-4827-8810-2AC0725666B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E_Commerce.Dal", "E_Commerce.Dal\E_Commerce.Dal.csproj", "{C4179FAA-8CE5-4BC5-98C6-5A2AFAAFA87B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E_Commerce.Dal", "E_Commerce.Dal\E_Commerce.Dal.csproj", "{C4179FAA-8CE5-4BC5-98C6-5A2AFAAFA87B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E_Commerce.Repository", "E_Commerce.Repository\E_Commerce.Repository.csproj", "{77E728DA-EA6F-4FFF-9902-D654A926BB31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C4179FAA-8CE5-4BC5-98C6-5A2AFAAFA87B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4179FAA-8CE5-4BC5-98C6-5A2AFAAFA87B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4179FAA-8CE5-4BC5-98C6-5A2AFAAFA87B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77E728DA-EA6F-4FFF-9902-D654A926BB31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77E728DA-EA6F-4FFF-9902-D654A926BB31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77E728DA-EA6F-4FFF-9902-D654A926BB31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77E728DA-EA6F-4FFF-9902-D654A926BB31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
