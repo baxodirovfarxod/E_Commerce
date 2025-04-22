@@ -8,6 +8,6 @@ public class Payment
     public string PaymentStatus { get; set; }
     public decimal PaidAmount { get; set; }
     public DateTime PaidAt { get; set; }
-    // public Order Order { get; set; }
+    public Order Order { get; set; }
 }
 
