@@ -10,7 +10,6 @@ public class Order
     public decimal Discount { get; set; }
     public byte DiscountPercentage { get; set; }
     public decimal ServicePrice { get; set; }
-    public int StatusId { get; set; }
     public Customer Customer { get; set; }
     public OrderStatus Status { get; set; }
     //public List<OrderProduct> OrderProducts { get; set; }
