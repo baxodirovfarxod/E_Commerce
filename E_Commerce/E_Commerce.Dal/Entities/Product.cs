@@ -11,5 +11,5 @@ public class Product
     public int StockQuantity { get; set; }
     public string? ImageLink { get; set; }
     public List<CartProduct> CartProducts { get; set; }
-    //public List<OrderProduct> OrderProducts { get; set; }
+    public List<OrderProduct> OrderProducts { get; set; }
 }
