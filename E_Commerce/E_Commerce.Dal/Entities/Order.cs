@@ -12,7 +12,7 @@ public class Order
     public decimal ServicePrice { get; set; }
     public Customer Customer { get; set; }
     public OrderStatus Status { get; set; }
-    //public List<OrderProduct> OrderProducts { get; set; }
+    public List<OrderProduct> OrderProducts { get; set; }
     public List<Payment> Payments { get; set; }
 }
 
