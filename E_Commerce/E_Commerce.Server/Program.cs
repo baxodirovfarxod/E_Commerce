@@ -1,4 +1,6 @@
 
+using E_Commerce.Server.Configurations;
+
 namespace E_Commerce.Server
 {
     public class Program
@@ -13,6 +15,8 @@ namespace E_Commerce.Server
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.ConfigureDatabase();
 
             var app = builder.Build();
 
