@@ -2,12 +2,14 @@
 using E_Commerce.Bll.Dtos.CartDTOs;
 using E_Commerce.Bll.Dtos.CartProductDTOs;
 using E_Commerce.Bll.Dtos.CustomerDTOs;
+using E_Commerce.Bll.Dtos.ProductDTOs;
 using E_Commerce.Bll.MappingProfile;
 using E_Commerce.Bll.Validators.CardValidators;
 using E_Commerce.Bll.Validators.CartProductValidator;
 using E_Commerce.Bll.Validators.CartValidator;
 using E_Commerce.Bll.Validators.CustomerValidator;
 using FluentValidation;
+using static E_Commerce.Bll.Validators.ProductValidator.ProductCreateValidator;
 
 namespace E_Commerce.Server.Configurations;
 
@@ -22,6 +24,7 @@ public static class DependencyInjectionConfigurations
         builder.Services.AddScoped<IValidator<CardUpdateDto>, CardUpdateDtoValidator>();
         builder.Services.AddScoped<IValidator<CustomerCreateDto>, CustomerCreateDtoValidator>();
         builder.Services.AddScoped<IValidator<CustomerUpdateDto>, CustomerUpdateDtoValidator>();
+        builder.Services.AddScoped<IValidator<ProductCreateDto>, ProductCreateDtoValidator>();
 
     }
 }
