@@ -1,8 +1,7 @@
-﻿using E_Commerce.Bll.Dtos.CartProductDTOs;
-using E_Commerce.Bll.Dtos.CartDTOs;
+﻿using E_Commerce.Bll.Dtos.CartDTOs;
+using E_Commerce.Bll.Dtos.CartProductDTOs;
 using E_Commerce.Bll.MappingProfile;
 using E_Commerce.Bll.Validators.CartProductValidator;
-using FluentValidation;
 using E_Commerce.Bll.Validators.CartValidator;
 using FluentValidation;
 
