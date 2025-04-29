@@ -13,8 +13,6 @@ public static class DependencyInjectionConfigurations
     {
         builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
         builder.Services.AddScoped<IValidator<CartProductCreateDto>, CartProductCreateDtoValidator>();
-
-
         builder.Services.AddScoped<IValidator<CartCreateDto>, CartCreateDtoValidator>();
 
     }
