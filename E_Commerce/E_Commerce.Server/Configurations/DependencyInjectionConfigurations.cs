@@ -1,7 +1,9 @@
-﻿using E_Commerce.Bll.Dtos.CartDTOs;
+﻿using E_Commerce.Bll.Dtos.CardDTOs;
+using E_Commerce.Bll.Dtos.CartDTOs;
 using E_Commerce.Bll.Dtos.CartProductDTOs;
 using E_Commerce.Bll.Dtos.CustomerDTOs;
 using E_Commerce.Bll.MappingProfile;
+using E_Commerce.Bll.Validators.CardValidators;
 using E_Commerce.Bll.Validators.CartProductValidator;
 using E_Commerce.Bll.Validators.CartValidator;
 using E_Commerce.Bll.Validators.CustomerValidator;
@@ -16,6 +18,8 @@ public static class DependencyInjectionConfigurations
         builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
         builder.Services.AddScoped<IValidator<CartProductCreateDto>, CartProductCreateDtoValidator>();
         builder.Services.AddScoped<IValidator<CartCreateDto>, CartCreateDtoValidator>();
+        builder.Services.AddScoped<IValidator<CardCreateDto>, CardCreateDtoValidator>();
+        builder.Services.AddScoped<IValidator<CardUpdateDto>, CardUpdateDtoValidator>();
         builder.Services.AddScoped<IValidator<CustomerCreateDto>, CustomerCreateDtoValidator>();
         builder.Services.AddScoped<IValidator<CustomerUpdateDto>, CustomerUpdateDtoValidator>();
 
