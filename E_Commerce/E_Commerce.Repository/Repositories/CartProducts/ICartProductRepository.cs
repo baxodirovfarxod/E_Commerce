@@ -1,6 +1,6 @@
 ﻿using E_Commerce.Dal.Entities;
 
-namespace E_Commerce.Repository.Repositories;
+namespace E_Commerce.Repository.Repositories.CartProducts;
 
 public interface ICartProductRepository
 {
