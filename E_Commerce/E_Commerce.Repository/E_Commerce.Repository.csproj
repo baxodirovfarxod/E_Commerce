@@ -10,4 +10,8 @@
     <ProjectReference Include="..\E_Commerce.Dal\E_Commerce.Dal.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\NewFolder\" />
+  </ItemGroup>
+
 </Project>
