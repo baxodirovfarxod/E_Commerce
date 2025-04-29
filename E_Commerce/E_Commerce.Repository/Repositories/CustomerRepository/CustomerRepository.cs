@@ -30,7 +30,7 @@ public class CustomerRepository : ICustomerRepository
         return customer.CustomerId;
     }
 
-    public async Task<ICollection<Customer>> SelectAllCustomersAsync(int skip, int take)
+    public async Task<List<Customer>> SelectAllCustomersAsync(int skip, int take)
     {
         return await Maincontext.Customers
            .Skip(skip)
