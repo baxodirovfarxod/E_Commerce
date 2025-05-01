@@ -31,7 +31,8 @@ public class MappingProfile : Profile
 
         CreateMap<OrderProduct, OrderProductGetDto>().ReverseMap(); 
 
-        CreateMap<Order, OrderGetDto>().ReverseMap(); 
+        CreateMap<Order, OrderGetDto>().ReverseMap();
+        CreateMap<Order, OrderCreateDto>().ReverseMap();
 
         CreateMap<Payment, PaymentCreateDto>().ReverseMap(); 
         CreateMap<Payment, PaymentGetDto>().ReverseMap(); 
