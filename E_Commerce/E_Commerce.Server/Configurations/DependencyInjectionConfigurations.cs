@@ -7,6 +7,7 @@ using E_Commerce.Bll.Dtos.PaymentDTOs;
 using E_Commerce.Bll.Dtos.ProductDTOs;
 using E_Commerce.Bll.MappingProfile;
 using E_Commerce.Bll.Services.CartService;
+using E_Commerce.Bll.Services.OrderService;
 using E_Commerce.Bll.Validators.CardValidators;
 using E_Commerce.Bll.Validators.CartProductValidator;
 using E_Commerce.Bll.Validators.CartValidator;
@@ -14,6 +15,7 @@ using E_Commerce.Bll.Validators.CustomerValidator;
 using E_Commerce.Bll.Validators.OrderValidator;
 using E_Commerce.Bll.Validators.PaymentValidator;
 using E_Commerce.Repository.Repositories.CartRepository;
+using E_Commerce.Repository.Repositories.OrderRepository;
 using FluentValidation;
 using static E_Commerce.Bll.Validators.ProductValidator.ProductCreateValidator;
 
@@ -44,6 +46,9 @@ public static class DependencyInjectionConfigurations
 
         builder.Services.AddScoped<ICartRepository, CartRepository>();
         builder.Services.AddScoped<ICartService, CartService>();
+
+        builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+        builder.Services.AddScoped<IOrderService, OrderService>();
 
     }
 }
