@@ -15,7 +15,7 @@ public class CartRepository : ICartRepository
 
     public async Task ClearCartAsync(long customerId)
     {
-        var cart = await GetCartByCustomerIdAsync(customerId);
+        var cart = await SelectCartByCustomerIdAsync(customerId);
 
         if (cart != null)
         {
@@ -26,7 +26,7 @@ public class CartRepository : ICartRepository
 
     public async Task<Cart> CreateCartAsync(long customerId)
     {
-        var cart = await GetCartByCustomerIdAsync(customerId);
+        var cart = await SelectCartByCustomerIdAsync(customerId);
         if (cart == null)
         {
             cart = new Cart
@@ -44,7 +44,7 @@ public class CartRepository : ICartRepository
 
     public async Task DeleteCartAsync(long customerId)
     {
-        var cart = await GetCartByCustomerIdAsync(customerId);
+        var cart = await SelectCartByCustomerIdAsync(customerId);
 
         if (cart != null)
         {
@@ -53,7 +53,7 @@ public class CartRepository : ICartRepository
         }
     }
 
-    public async Task<Cart?> GetCartByCustomerIdAsync(long customerId, bool withCartProducts = false, bool withProduct = false)
+    public async Task<Cart?> SelectCartByCustomerIdAsync(long customerId, bool withCartProducts = false, bool withProduct = false)
     {
         var query = MainContext.Carts.AsQueryable();
 
@@ -75,7 +75,7 @@ public class CartRepository : ICartRepository
 
     public async Task UpdateCartAsync(Cart cart)
     {
-        var cartFromDB = await GetCartByCustomerIdAsync(cart.CustomerId);
+        var cartFromDB = await SelectCartByCustomerIdAsync(cart.CustomerId);
 
         if (cartFromDB != null)
         {

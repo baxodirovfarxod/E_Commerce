@@ -12,11 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\E_Commerce.Dal\E_Commerce.Dal.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\E_Commerce.Repository\E_Commerce.Repository.csproj" />
   </ItemGroup>
 
 </Project>

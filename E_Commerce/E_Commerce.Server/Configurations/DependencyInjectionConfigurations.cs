@@ -12,6 +12,8 @@ using E_Commerce.Bll.Validators.CustomerValidator;
 using E_Commerce.Bll.Validators.PaymentValidator;
 using FluentValidation;
 using static E_Commerce.Bll.Validators.ProductValidator.ProductCreateValidator;
+using E_Commerce.Bll.Services.CartService;
+using E_Commerce.Repository.Repositories.CartRepository;
 
 namespace E_Commerce.Server.Configurations;
 
@@ -29,6 +31,10 @@ public static class DependencyInjectionConfigurations
         builder.Services.AddScoped<IValidator<ProductCreateDto>, ProductCreateDtoValidator>();
         builder.Services.AddScoped<IValidator<PaymentCreateDto>, PaymentCreateDtoValidator>();
         builder.Services.AddScoped<IValidator<PaymentUpdateDto>, PaymentUpdateDtoValidator>();
+
+
+        builder.Services.AddScoped<ICartRepository, CartRepository>();
+        builder.Services.AddScoped<ICartService, CartService>();
 
     }
 }
