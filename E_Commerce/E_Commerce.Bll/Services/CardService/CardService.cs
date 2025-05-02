@@ -65,9 +65,10 @@ namespace E_Commerce.Bll.Services.CardService
             var cardGetDtos = allCards
             .Select(card => _mapper.Map<CardGetDto>(card))
             .ToList();
-            return cardGetDtos;
 
+            return cardGetDtos;
         }
+
         public async Task SelectCardForPaymentAsync(long cardId, long customerId)
         {
             var allCards = await _cardRepository.SelectCardsByCustomerIdAsync(customerId);
