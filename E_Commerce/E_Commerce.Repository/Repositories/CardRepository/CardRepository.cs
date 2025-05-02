@@ -23,6 +23,19 @@ public class CardRepository : ICardRepository
         }
     }
 
+    public async Task AssignCardsAsNotSelectedAsync(List<Card> cards)
+    {
+        if (cards == null || cards.Count == 0)
+            return;
+
+        foreach (var card in cards)
+        {
+            card.SelectedForPayment = false;
+        }
+
+        await MainContext.SaveChangesAsync();
+    }
+
     public async Task AssignCardAsSelectedAsync(long cardId)
     {
         var card = await MainContext.Cards.FirstOrDefaultAsync(c => c.CardId == cardId);
