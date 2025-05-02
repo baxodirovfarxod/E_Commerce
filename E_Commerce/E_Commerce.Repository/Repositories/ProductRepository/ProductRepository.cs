@@ -11,6 +11,14 @@ public class ProductRepository : IProductRepository
     {
         MainContext = mainContext;
     }
+
+    public async Task<bool> ExistsByNameAsync(string name)
+    {
+        return await MainContext.Products
+            .AnyAsync(p => p.Name == name && !p.IsDeleted);
+
+    }
+
     public async Task<long> InsertProductAsync(Product product)
     {
         MainContext.Products.Add(product);
@@ -18,14 +26,35 @@ public class ProductRepository : IProductRepository
         return product.ProductId;
     }
 
+    public async Task<List<Product>> SelectAllProductsAsync(int skip, int take)
+    {
+        return await MainContext.Products
+                   .Where(p => !p.IsDeleted)
+                   .Skip(skip)
+                   .Take(take)
+                   .ToListAsync();
+    }
+
     public async Task<Product?> SelectProductByIdAsync(long productId)
     {
-        return await MainContext.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
+        return await MainContext.Products
+            .FirstOrDefaultAsync(p => p.ProductId == productId && !p.IsDeleted);
+    }
+
+    public async Task SoftDeleteProductAsync(long productId)
+    {
+        var product = await MainContext.Products
+             .FirstOrDefaultAsync(p => p.ProductId == productId && !p.IsDeleted);
+        if (product != null)
+        {
+            product.IsDeleted = true;
+            await MainContext.SaveChangesAsync();
+        }
     }
 
     public async Task UpdateProductAsync(Product product)
     {
         MainContext.Products.Update(product);
-        await MainContext.SaveChangesAsync(); 
+        await MainContext.SaveChangesAsync();
     }
 }

@@ -39,6 +39,7 @@ public class MappingProfile : Profile
         CreateMap<Payment, PaymentUpdateDto>().ReverseMap(); 
 
         CreateMap<Product, ProductCreateDto>().ReverseMap();
-        CreateMap<Product, ProductGetDto>().ReverseMap(); 
+        CreateMap<Product, ProductGetDto>().ReverseMap();
+        CreateMap<Product, ProductUpdateDto>().ReverseMap();
     }
 }
