@@ -15,7 +15,9 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Card, CardCreateDto>().ReverseMap(); 
+        CreateMap<Card, CardCreateDto>()
+            .ReverseMap()
+            .ForMember(dest => dest.SelectedForPayment, opt => opt.MapFrom(src => true));
         CreateMap<Card, CardGetDto>().ReverseMap(); 
         CreateMap<Card, CardUpdateDto>().ReverseMap(); 
 

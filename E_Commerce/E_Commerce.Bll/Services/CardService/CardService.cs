@@ -20,6 +20,7 @@ namespace E_Commerce.Bll.Services.CardService
         }
         public async Task<long> CreateCardAsync(CardCreateDto cardCreateDto)
         {
+            ArgumentNullException.ThrowIfNull(cardCreateDto);
 
             var validationResult = _cardCreateDtoValidator.Validate(cardCreateDto);
             if (!validationResult.IsValid)
@@ -27,23 +28,14 @@ namespace E_Commerce.Bll.Services.CardService
                 throw new ValidationException(validationResult.Errors);
             }
 
-            ArgumentNullException.ThrowIfNull(cardCreateDto);
-
             var existingCards = await _cardRepository.SelectCardsByCustomerIdAsync(cardCreateDto.CustomerId);
+            var selectedCards = existingCards.Where(c => c.SelectedForPayment).ToList();
 
-            foreach (var card in existingCards.Where(c => c.SelectedForPayment))
-            {
-                await _cardRepository.AssignCardAsNotSelectedAsync(card.CardId);
+            await _cardRepository.AssignCardsAsNotSelectedAsync(selectedCards);
 
-            }
-            var cardEntity = _mapper.Map<Card>(cardCreateDto);
-            cardEntity.CustomerId = cardCreateDto.CustomerId;
-            cardEntity.SelectedForPayment = true;
-
+            var cardEntity = _mapper.Map<Card>(cardCreateDto);        
             return await _cardRepository.InsertCardAsync(cardEntity);
         }
-
-
 
         public async Task DeleteCardAsync(long cardId, long customerId)
         {
