@@ -81,11 +81,11 @@ public class OrderService : IOrderService
 
         var totalAmount = cart.CartProducts.Sum(cp => cp.Quantity * cp.Product.Price);
 
-        var orderPreview = new OrderGetDto
+        return new OrderGetDto
         {
             CustomerId = customerId,
             TotalAmount = totalAmount,
-            CreatedAt = DateTime.Now,
+
             OrderProducts = cart.CartProducts.Select(p => new OrderProductGetDto
             {
                 ProductId = p.ProductId,
@@ -93,22 +93,21 @@ public class OrderService : IOrderService
                 PriceAtPurchase = p.Product.Price
 
             }).ToList()
+
         };
 
-        return orderPreview;
     }
 
     public async Task<List<OrderGetDto>> GetOrdersAsync(long customerId)
     {
         var orders = await OrderRepository.SelectOrdersByCustomerId(customerId);
+
         if (orders == null || !orders.Any())
         {
             throw new Exception("No orders found for the given customer.");
         }
 
-        var orderGetDto = Mapper.Map<List<OrderGetDto>>(orders);
-
-        return orderGetDto;
+        return Mapper.Map<List<OrderGetDto>>(orders);
     }
 }
 
