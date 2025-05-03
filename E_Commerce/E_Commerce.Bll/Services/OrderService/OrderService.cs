@@ -62,7 +62,6 @@ public class OrderService : IOrderService
         await CartRepository.ClearCartAsync(order.CustomerId);
 
         return Mapper.Map<OrderGetDto>(order);
-
     }
 
     public async Task<OrderGetDto> GetOrderPreviewAsync(long customerId)
@@ -93,9 +92,7 @@ public class OrderService : IOrderService
                 PriceAtPurchase = p.Product.Price
 
             }).ToList()
-
         };
-
     }
 
     public async Task<List<OrderGetDto>> GetOrdersAsync(long customerId)
