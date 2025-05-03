@@ -8,12 +8,12 @@ public class CardCreateDtoValidator : AbstractValidator<CardCreateDto>
     public CardCreateDtoValidator()
     {
         RuleFor(x => x.CustomerId)
-            .GreaterThan(0).WithMessage("Customer ID must be greater than 0.");
+            .GreaterThan(0).WithMessage("Customer Id must be greater than 0.");
 
-        RuleFor(x => x.CardNumber)
+        RuleFor(x => x.Number)
             .NotEmpty().WithMessage("Card number is required.")
-            .Matches(@"^\d{16}$").WithMessage("Card number must be 16 digits.")
-            .CreditCard().WithMessage("Invalid card number format.");
+            .Matches(@"^\d{16}$").WithMessage("Card number must be 16 digits.");
+            
 
         RuleFor(x => x.HolderName)
             .NotEmpty().WithMessage("Holder name is required.");
