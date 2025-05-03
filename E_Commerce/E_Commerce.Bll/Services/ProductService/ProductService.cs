@@ -50,8 +50,8 @@ public class ProductService : IProductService
         {
             throw new Exception("Product not found");
         }
-        await ProductRepository.SoftDeleteProductAsync(productId);
 
+        await ProductRepository.SoftDeleteProductAsync(productId);
     }
 
     public async Task<List<ProductGetDto>> GetAllProductsAsync(int skip, int take)
