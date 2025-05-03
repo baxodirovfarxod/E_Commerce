@@ -9,12 +9,12 @@ namespace E_Commerce.Bll.Services.ProductService;
 public class ProductService : IProductService
 {
     private readonly IProductRepository ProductRepository;
-    private readonly Mapper Mapper;
+    private readonly IMapper Mapper;
     private readonly IValidator<ProductCreateDto> ProductCreateDtoValidator;
     private readonly IValidator<ProductUpdateDto> ProductUpdateDtoValidator;
 
 
-    public ProductService(IProductRepository productRepository, Mapper mapper, IValidator<ProductCreateDto> productCreateDtoValidator, IValidator<ProductUpdateDto> productUpdateDtoValidator)
+    public ProductService(IProductRepository productRepository, IMapper mapper, IValidator<ProductCreateDto> productCreateDtoValidator, IValidator<ProductUpdateDto> productUpdateDtoValidator)
     {
         ProductRepository = productRepository;
         Mapper = mapper;

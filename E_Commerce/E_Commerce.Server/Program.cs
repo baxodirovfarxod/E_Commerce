@@ -17,6 +17,7 @@ namespace E_Commerce.Server
             builder.Services.AddSwaggerGen();
 
             builder.ConfigureDatabase();
+            builder.ConfigureServices();
 
             var app = builder.Build();
 
