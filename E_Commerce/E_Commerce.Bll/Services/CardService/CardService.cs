@@ -29,11 +29,26 @@ namespace E_Commerce.Bll.Services.CardService
             }
 
             var existingCards = await _cardRepository.SelectCardsByCustomerIdAsync(cardCreateDto.CustomerId);
-            var selectedCards = existingCards.Where(c => c.SelectedForPayment).ToList();
 
+            var normalizedInputNumber = cardCreateDto.Number.Replace(" ", "").Trim();
+
+            foreach (var card in existingCards)
+            {
+                var existingNumber = card.Number.Replace(" ", "").Trim();
+                if (existingNumber == normalizedInputNumber)
+                {
+                    throw new ValidationException("Card with this number already exists.");
+                }
+            }
+
+            if (existingCards.Count >= 5)
+            {
+                throw new ValidationException("You can only save up to 5 cards.");
+            }
+            var selectedCards = existingCards.Where(c => c.SelectedForPayment).ToList();
             await _cardRepository.AssignCardsAsNotSelectedAsync(selectedCards);
 
-            var cardEntity = _mapper.Map<Card>(cardCreateDto);        
+            var cardEntity = _mapper.Map<Card>(cardCreateDto);
             return await _cardRepository.InsertCardAsync(cardEntity);
         }
 
@@ -82,9 +97,10 @@ namespace E_Commerce.Bll.Services.CardService
 
             foreach (var card in allCards)
             {
-                card.SelectedForPayment = (card.CardId == cardId);
-                await _cardRepository.AssignCardAsSelectedAsync(card.CardId);
+                await _cardRepository.AssignCardAsNotSelectedAsync(card.CardId);
             }
+            await _cardRepository.AssignCardAsSelectedAsync(cardId);
+
         }
 
     }
