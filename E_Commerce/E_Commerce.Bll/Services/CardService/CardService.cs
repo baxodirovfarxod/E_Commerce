@@ -47,6 +47,7 @@ namespace E_Commerce.Bll.Services.CardService
             await _cardRepository.AssignCardsAsNotSelectedAsync(selectedCards);
 
             var cardEntity = _mapper.Map<Card>(cardCreateDto);
+            cardEntity.SelectedForPayment = true;
             return await _cardRepository.InsertCardAsync(cardEntity);
         }
 
