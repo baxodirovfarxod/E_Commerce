@@ -12,12 +12,9 @@ public class OrderCreateDtoValidator : AbstractValidator<OrderCreateDto>
             .WithMessage("CustomerId must be greater than 0.");
 
         RuleFor(x => x.Discount)
-            .NotEmpty()
-            .WithMessage("Discount is required.")
-            .GreaterThan(0)
-            .WithMessage("Discount must be greater than 0.")
-            .LessThan(100)
-            .WithMessage("Discount must be less than 100.");
+            .GreaterThanOrEqualTo(0)
+            .WithMessage("Discount must be greater than 0.");
+       
 
         RuleFor(x => x.DiscountPercentage)
             .InclusiveBetween((byte)0, (byte)100)
