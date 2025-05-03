@@ -9,5 +9,4 @@ public interface IProductService
     Task<List<ProductGetDto>> GetAllProductsAsync(int skip, int take);
     Task<ProductGetDto> UpdateProductAsync(long productId, ProductUpdateDto productUpdateDto);
     Task MarkProductAsDeletedAsync(long productId);
-
 }
