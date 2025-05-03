@@ -30,12 +30,10 @@ namespace E_Commerce.Bll.Services.CardService
 
             var existingCards = await _cardRepository.SelectCardsByCustomerIdAsync(cardCreateDto.CustomerId);
 
-            var normalizedInputNumber = cardCreateDto.Number.Replace(" ", "").Trim();
 
             foreach (var card in existingCards)
             {
-                var existingNumber = card.Number.Replace(" ", "").Trim();
-                if (existingNumber == normalizedInputNumber)
+                if (card.Number == cardCreateDto.Number)
                 {
                     throw new ValidationException("Card with this number already exists.");
                 }
