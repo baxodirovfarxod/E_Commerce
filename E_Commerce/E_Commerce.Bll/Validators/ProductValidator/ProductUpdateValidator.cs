@@ -7,7 +7,7 @@ public class ProductUpdateValidator : AbstractValidator<ProductUpdateDto>
 {
     public ProductUpdateValidator()
     {
-        Include(new ProductCreateValidator());
+        //Include(new ProductCreateValidator());
 
         RuleFor(x => x.ProductId)
             .GreaterThan(0).WithMessage("ProductId must be greater than 0.");
