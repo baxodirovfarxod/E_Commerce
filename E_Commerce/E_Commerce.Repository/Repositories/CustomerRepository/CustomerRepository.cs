@@ -33,9 +33,11 @@ public class CustomerRepository : ICustomerRepository
     public async Task<List<Customer>> SelectAllCustomersAsync(int skip, int take)
     {
         return await Maincontext.Customers
-           .Skip(skip)
-           .Take(take)
-           .ToListAsync();
+                                .Include(c => c.Cards)
+                                .Include(c => c.Orders)
+                                .Skip(skip)
+                                .Take(take)
+                                .ToListAsync();
     }
 
     public async Task<Customer?> SelectCustomerByEmailAsync(string email)
@@ -46,6 +48,8 @@ public class CustomerRepository : ICustomerRepository
     public async Task<Customer?> SelectCustomerByIdAsync(long customerId)
     {
         return await Maincontext.Customers
+            .Include(c => c.Cards)
+            .Include(c => c.Orders)
             .FirstOrDefaultAsync(c => c.CustomerId == customerId);
     }
 }
