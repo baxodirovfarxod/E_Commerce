@@ -38,6 +38,11 @@ public class CustomerRepository : ICustomerRepository
            .ToListAsync();
     }
 
+    public async Task<Customer?> SelectCustomerByEmailAsync(string email)
+    {
+        return await Maincontext.Customers.FirstOrDefaultAsync(c => c.Email == email);
+    }
+
     public async Task<Customer?> SelectCustomerByIdAsync(long customerId)
     {
         return await Maincontext.Customers
