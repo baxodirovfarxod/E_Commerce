@@ -18,14 +18,16 @@ namespace E_Commerce.Bll.Services.CardService
             _mapper = mapper;
             _cardCreateDtoValidator = cardCreateDtovalidator;
         }
+        
         public async Task<long> CreateCardAsync(CardCreateDto cardCreateDto)
         {
             ArgumentNullException.ThrowIfNull(cardCreateDto);
 
-            var validationResult = _cardCreateDtoValidator.Validate(cardCreateDto);
+            var validationResult = await _cardCreateDtoValidator.ValidateAsync(cardCreateDto);
             if (!validationResult.IsValid)
             {
-                throw new ValidationException(validationResult.Errors);
+                var errors = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+                throw new ValidationException($"Validation failed: {errors}");
             }
 
             var existingCards = await _cardRepository.SelectCardsByCustomerIdAsync(cardCreateDto.CustomerId);
