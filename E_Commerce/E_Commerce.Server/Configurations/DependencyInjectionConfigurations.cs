@@ -8,6 +8,7 @@ using E_Commerce.Bll.Dtos.ProductDTOs;
 using E_Commerce.Bll.MappingProfile;
 using E_Commerce.Bll.Services.CardService;
 using E_Commerce.Bll.Services.CartService;
+using E_Commerce.Bll.Services.CustomerService;
 using E_Commerce.Bll.Services.OrderService;
 using E_Commerce.Bll.Services.ProductService;
 using E_Commerce.Bll.Validators.CardValidators;
@@ -68,6 +69,7 @@ public static class DependencyInjectionConfigurations
         builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+        builder.Services.AddScoped<ICustomerService, CustomerService>();
 
         builder.Services.AddScoped<IOrderRepository, OrderRepository>();
         builder.Services.AddScoped<IOrderService, OrderService>();
