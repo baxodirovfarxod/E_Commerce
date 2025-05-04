@@ -8,4 +8,5 @@ public interface ICustomerRepository
     Task<Customer?> SelectCustomerByIdAsync(long customerId);
     Task DeleteCustomerByIdAsync(long customerId);
     Task<List<Customer>> SelectAllCustomersAsync(int skip, int take);
+    Task<Customer?> SelectCustomerByEmailAsync(string email);
 }
