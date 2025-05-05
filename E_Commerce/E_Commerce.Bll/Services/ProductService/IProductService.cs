@@ -7,6 +7,6 @@ public interface IProductService
     Task<long> CreateProductAsync(ProductCreateDto productCreateDto);
     Task<ProductGetDto> GetProductByIdAsync(long productId);
     Task<List<ProductGetDto>> GetAllProductsAsync(int skip, int take);
-    Task<ProductGetDto> UpdateProductAsync(long productId, ProductUpdateDto productUpdateDto);
+    Task<ProductGetDto> UpdateProductAsync(ProductUpdateDto productUpdateDto);
     Task MarkProductAsDeletedAsync(long productId);
 }

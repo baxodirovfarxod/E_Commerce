@@ -79,7 +79,7 @@ public class ProductService : IProductService
         return Mapper.Map<ProductGetDto>(product);
     }
 
-    public async Task<ProductGetDto> UpdateProductAsync(long productId, ProductUpdateDto productUpdateDto)
+    public async Task<ProductGetDto> UpdateProductAsync(ProductUpdateDto productUpdateDto)
     {
         var validationResult = await ProductUpdateDtoValidator.ValidateAsync(productUpdateDto);
 
@@ -88,7 +88,7 @@ public class ProductService : IProductService
             throw new ValidationException(validationResult.Errors);
         }
 
-        var product = await ProductRepository.SelectProductByIdAsync(productId);
+        var product = await ProductRepository.SelectProductByIdAsync(productUpdateDto.ProductId);
 
         if (product == null)
         {
