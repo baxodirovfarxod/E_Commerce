@@ -34,9 +34,9 @@ namespace E_Commerce.Server.Controller
         }
 
         [HttpPut("update")]
-        public Task<ProductGetDto> UpdateProductAsync(long productId, ProductUpdateDto productUpdateDto)
+        public Task<ProductGetDto> UpdateProductAsync(ProductUpdateDto productUpdateDto)
         {
-            return ProductService.UpdateProductAsync(productId, productUpdateDto);
+            return ProductService.UpdateProductAsync(productUpdateDto);
         }
 
         [HttpDelete("delete")]
