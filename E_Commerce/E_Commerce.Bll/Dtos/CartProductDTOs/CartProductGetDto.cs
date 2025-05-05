@@ -2,8 +2,9 @@
 
 namespace E_Commerce.Bll.Dtos.CartProductDTOs;
 
-public class CartProductGetDto : CartProductCreateDto
+public class CartProductGetDto 
 {
-    public long CartProductId { get; set; }
+    public int Quantity { get; set; }
+    public long ProductId { get; set; }
     public ProductGetDto? Product { get; set; } 
 }

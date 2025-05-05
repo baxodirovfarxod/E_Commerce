@@ -11,9 +11,9 @@ public class CartProductCreateDtoValidator : AbstractValidator<CartProductCreate
                 .GreaterThan(0)
                 .WithMessage("Quantity must be greater than 0.");
 
-        RuleFor(x => x.CartId)
+        RuleFor(x => x.CustomerId)
                .GreaterThan(0)
-               .WithMessage("CartId must be greater than 0.");
+               .WithMessage("CustomerId must be greater than 0.");
 
         RuleFor(x => x.ProductId)
                 .GreaterThan(0)

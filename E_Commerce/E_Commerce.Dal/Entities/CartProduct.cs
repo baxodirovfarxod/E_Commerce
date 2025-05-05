@@ -2,7 +2,6 @@
 
 public class CartProduct
 {
-    public long CartProductId { get; set; }
     public int Quantity { get; set; }
     public long CartId { get; set; }
     public Cart Cart { get; set; }

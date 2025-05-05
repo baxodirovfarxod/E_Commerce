@@ -30,6 +30,9 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.ImageLink)
             .IsRequired(false)
             .HasMaxLength(200);
+
+        builder.Property(p => p.IsDeleted)
+            .HasDefaultValue(false);
     }
 }
 

@@ -27,7 +27,7 @@ namespace E_Commerce.Repository.Repositories.CartProducts
         {
             _context.CartProducts.Add(cartProduct);
             await _context.SaveChangesAsync();
-            return cartProduct.CartProductId;
+            return cartProduct.CartId;
         }
 
         public async Task<List<CartProduct>> SelectCartProductsByCartIdAsync(long cartId)
