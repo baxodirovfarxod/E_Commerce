@@ -52,5 +52,28 @@ public class CustomerRepository : ICustomerRepository
             .Include(c => c.Orders)
             .FirstOrDefaultAsync(c => c.CustomerId == customerId);
     }
+
+    public async Task<Customer?> SelectCustomerByIdAsync(long customerId, bool withCart = false, bool withCartProduct = false, bool withProduct = false)
+    {
+        var query = Maincontext.Customers.AsQueryable();
+
+        if (withCart && withCartProduct && withProduct)
+        {
+            query = query.Include(c => c.Cart)
+                         .ThenInclude(c => c.CartProducts)
+                         .ThenInclude(cp => cp.Product);
+        }
+        else if (withCart && withCartProduct)
+        {
+            query = query.Include(c => c.Cart)
+                         .ThenInclude(c => c.CartProducts);
+        }
+        else if (withCart)
+        {
+            query = query.Include(c => c.Cart);
+        }
+
+        return await query.FirstOrDefaultAsync(c => c.CustomerId == customerId);
+    }
 }
 

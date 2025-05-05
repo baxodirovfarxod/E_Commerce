@@ -14,7 +14,6 @@ public class OrderGetDto
     public decimal Discount { get; set; }
     public byte DiscountPercentage { get; set; }
     public decimal ServicePrice { get; set; }
-    public CustomerGetDto? Customer { get; set; }
     public OrderStatus Status { get; set; }
     public List<OrderProductGetDto>? OrderProducts { get; set; }
     public List<PaymentGetDto>? Payments { get; set; }
