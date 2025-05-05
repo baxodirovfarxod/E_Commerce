@@ -23,6 +23,10 @@ public class ProductCreateValidator
             RuleFor(x => x.ImageLink)
                 .MaximumLength(300).WithMessage("Image link must not exceed 300 characters.")
                 .When(x => !string.IsNullOrWhiteSpace(x.ImageLink));
+
+            RuleFor(x => x.Description)
+                .MaximumLength(500).WithMessage("Image link must not exceed 500 characters.")
+                .When(x => !string.IsNullOrWhiteSpace(x.ImageLink));
         }
     }
 }

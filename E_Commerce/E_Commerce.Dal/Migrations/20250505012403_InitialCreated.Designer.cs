@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.Dal.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20250428182845_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250505012403_InitialCreated")]
+    partial class InitialCreated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -249,6 +249,11 @@ namespace E_Commerce.Dal.Migrations
                     b.Property<string>("ImageLink")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Name")
                         .IsRequired()

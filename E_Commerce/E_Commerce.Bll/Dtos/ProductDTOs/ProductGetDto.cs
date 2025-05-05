@@ -6,6 +6,4 @@ namespace E_Commerce.Bll.Dtos.ProductDTOs;
 public class ProductGetDto : ProductCreateDto
 {
     public long ProductId { get; set; }
-    public List<CartProductGetDto>? CartProducts { get; set; }
-    public List<OrderProductGetDto>? OrderProducts { get; set; }
 }

@@ -36,11 +36,11 @@ public class CartService : ICartService
             throw new ValidationException(validationResult.Errors);
         }
 
-        var cart = await CartRepository.SelectCartByCustomerIdAsync(cartProductCreateDto.CartId);
+        var cart = await CartRepository.SelectCartByCustomerIdAsync(cartProductCreateDto.CustomerId, true);
 
         if (cart == null)
         {
-            cart = await CartRepository.CreateCartAsync(cartProductCreateDto.CartId);
+            cart = await CartRepository.CreateCartAsync(cartProductCreateDto.CustomerId);
         }
 
         var customer = await CustomerRepository.SelectCustomerByIdAsync(cart.CustomerId);
@@ -79,19 +79,15 @@ public class CartService : ICartService
             cart.CartProducts.Add(newCartProduct);
         }
 
-        product.StockQuantity -= cartProductCreateDto.Quantity;
-
         await CartRepository.UpdateCartAsync(cart);
-        await ProductRepository.UpdateProductAsync(product);
-
     }
     public async Task<CartGetDto> GetCartByCustomerIdAsync(long customerId)
     {
-        var cart = await CartRepository.SelectCartByCustomerIdAsync(customerId);
+        var cart = await CartRepository.SelectCartByCustomerIdAsync(customerId, true);
 
         if (cart == null)
         {
-            throw new Exception("Cart not found");
+            return new CartGetDto();
         }
 
         var cartDto = Mapper.Map<CartGetDto>(cart);
