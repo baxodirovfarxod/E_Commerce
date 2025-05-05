@@ -95,9 +95,6 @@ namespace E_Commerce.Dal.Migrations
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("CartProductId")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -183,9 +180,6 @@ namespace E_Commerce.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("OrderProductId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("PriceAtPurchase")

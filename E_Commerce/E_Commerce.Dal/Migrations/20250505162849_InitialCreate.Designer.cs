@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.Dal.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20250505012403_InitialCreated")]
-    partial class InitialCreated
+    [Migration("20250505162849_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,9 +96,6 @@ namespace E_Commerce.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CartProductId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("Quantity")
@@ -186,9 +183,6 @@ namespace E_Commerce.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("OrderProductId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("PriceAtPurchase")

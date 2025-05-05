@@ -5,6 +5,7 @@ using E_Commerce.Dal.Entities;
 using E_Commerce.Repository.Repositories.CartRepository;
 using E_Commerce.Repository.Repositories.CustomerRepository;
 using E_Commerce.Repository.Repositories.OrderRepository;
+using E_Commerce.Repository.Repositories.ProductRepository;
 using FluentValidation;
 
 namespace E_Commerce.Bll.Services.OrderService;
@@ -12,99 +13,139 @@ namespace E_Commerce.Bll.Services.OrderService;
 public class OrderService : IOrderService
 {
     private readonly IOrderRepository OrderRepository;
-    private readonly ICustomerRepository CustomerRepository;
-    private readonly ICartRepository CartRepository;
     private readonly IMapper Mapper;
     private readonly IValidator<OrderCreateDto> OrderCreateDtoValidator;
+    private readonly ICustomerRepository CustomerRepository;
+    private readonly IProductRepository ProductRepository;
+    private readonly ICartRepository CartRepository;
 
-    public OrderService(IOrderRepository orderRepository, IValidator<OrderCreateDto> orderCreateDtoValidator, IMapper mapper, ICustomerRepository customerRepository, ICartRepository cartRepository)
+    public OrderService(IOrderRepository orderRepository, IMapper mapper, IValidator<OrderCreateDto> orderCreateDtoValidator, ICustomerRepository customerRepository, ICartRepository cartRepository, IProductRepository productRepository)
     {
         OrderRepository = orderRepository;
-        OrderCreateDtoValidator = orderCreateDtoValidator;
         Mapper = mapper;
+        OrderCreateDtoValidator = orderCreateDtoValidator;
         CustomerRepository = customerRepository;
         CartRepository = cartRepository;
+        ProductRepository = productRepository;
     }
 
     public async Task<OrderGetDto> CreateOrderAsync(OrderCreateDto orderCreateDto)
     {
-        var validationResult = await OrderCreateDtoValidator.ValidateAsync(orderCreateDto);
+        var validationResult = OrderCreateDtoValidator.Validate(orderCreateDto);
         if (!validationResult.IsValid)
         {
             throw new ValidationException(validationResult.Errors);
         }
 
-        var customer = await CustomerRepository.SelectCustomerByIdAsync(orderCreateDto.CustomerId);
+        var customer = await CustomerRepository.SelectCustomerByIdAsync(orderCreateDto.CustomerId, true);
         if (customer == null)
         {
-            throw new Exception("Customer not found.");
+            throw new Exception("Customer not found");
         }
 
-        var cart = await CartRepository.SelectCartByCustomerIdAsync(orderCreateDto.CustomerId);
-        if (cart == null || !cart.CartProducts.Any())
+        var cart = await CartRepository.SelectCartByCustomerIdAsync(customer.CustomerId, true, true);
+        if (cart == null )
         {
-            throw new Exception("Cart is empty or not found");
+            throw new Exception("Cart not found");
+        }
+        if (cart.CartProducts == null || cart.CartProducts.Count == 0)
+        {
+            throw new Exception("Cart is empty");
         }
 
-        var order = Mapper.Map<Order>(orderCreateDto);
-        order.TotalAmount = cart.CartProducts.Sum(cp => cp.Quantity * cp.Product.Price);
-        order.CreatedAt = DateTime.UtcNow;
-        order.OrderProducts = cart.CartProducts.Select(p => new OrderProduct
+        var totalSum = cart.CartProducts.Sum(x => x.Product.Price * x.Quantity);
+        var servicePrice = totalSum * 0.1m;
+        totalSum = totalSum + servicePrice - orderCreateDto.Discount;
+        totalSum = totalSum - totalSum * orderCreateDto.DiscountPercentage / 100;
+
+        var order = new Order()
         {
-            ProductId = p.ProductId,
-            Quantity = p.Quantity,
-            PriceAtPurchase = p.Product.Price
+            CustomerId = customer.CustomerId,
+            CreatedAt = DateTime.Now,
+            TotalAmount = totalSum,
+            Discount = orderCreateDto.Discount,
+            DiscountPercentage = orderCreateDto.DiscountPercentage,
+            ServicePrice = servicePrice,
+            Status = 0,
+        };
 
-        }).ToList();
+        var orderId = await OrderRepository.InsertOrderAsync(order);
+        var orderProducts = new List<OrderProduct>();
+        foreach (var cartProduct in cart.CartProducts)
+        {
+            var orderProduct = new OrderProduct()
+            {
+                OrderId = orderId,
+                ProductId = cartProduct.ProductId,
+                Quantity = cartProduct.Quantity,
+                PriceAtPurchase = cartProduct.Product.Price
+            };
+            orderProducts.Add(orderProduct);
+            cartProduct.Product.StockQuantity -= cartProduct.Quantity;
+            await ProductRepository.UpdateProductAsync(cartProduct.Product);
+        }
 
-        await OrderRepository.InsertOrderAsync(order);
+        await CartRepository.ClearCartAsync(customer.CustomerId);
 
-        await CartRepository.ClearCartAsync(order.CustomerId);
-
-        return Mapper.Map<OrderGetDto>(order);
+        var orderWithProducts = await OrderRepository.SelectOrderByOrderId(orderId);
+        return Mapper.Map<OrderGetDto>(orderWithProducts);
     }
 
     public async Task<OrderGetDto> GetOrderPreviewAsync(long customerId)
     {
-        var customer = await CustomerRepository.SelectCustomerByIdAsync(customerId);
+        var customer = await CustomerRepository.SelectCustomerByIdAsync(customerId, true);
         if (customer == null)
         {
-            throw new Exception("Customer not found.");
+            throw new Exception("Customer not found");
         }
 
-        var cart = await CartRepository.SelectCartByCustomerIdAsync(customerId);
-        if (cart == null || !cart.CartProducts.Any())
+        var cart = await CartRepository.SelectCartByCustomerIdAsync(customerId, true, true);
+        if (cart == null)
         {
-            throw new Exception("Cart is empty or not found");
+            throw new Exception("Cart not found");
+        }
+        if (cart.CartProducts == null || cart.CartProducts.Count == 0)
+        {
+            throw new Exception("Cart is empty");
         }
 
-        var totalAmount = cart.CartProducts.Sum(cp => cp.Quantity * cp.Product.Price);
-
-        return new OrderGetDto
+        var orderProducts = new List<OrderProduct>();
+        foreach (var cartProduct in cart.CartProducts)
         {
-            CustomerId = customerId,
-            TotalAmount = totalAmount,
-
-            OrderProducts = cart.CartProducts.Select(p => new OrderProductGetDto
+            var orderProduct = new OrderProduct()
             {
-                ProductId = p.ProductId,
-                Quantity = p.Quantity,
-                PriceAtPurchase = p.Product.Price
+                ProductId = cartProduct.ProductId,
+                Quantity = cartProduct.Quantity,
+                PriceAtPurchase = cartProduct.Product.Price
+            };
+            orderProducts.Add(orderProduct);
+            cartProduct.Product.StockQuantity -= cartProduct.Quantity;
+            await ProductRepository.UpdateProductAsync(cartProduct.Product);
+        }
 
-            }).ToList()
+        var totalSum = cart.CartProducts.Sum(x => x.Product.Price * x.Quantity);
+        var servicePrice = totalSum * 0.1m;
+
+        var orderPreview = new OrderGetDto()
+        {
+            CustomerId = customer.CustomerId,
+            TotalAmount = totalSum + servicePrice,
+            ServicePrice = servicePrice,
+            OrderProducts = Mapper.Map<List<OrderProductGetDto>>(orderProducts),
         };
+
+        return orderPreview;
     }
 
     public async Task<List<OrderGetDto>> GetOrdersAsync(long customerId)
     {
         var orders = await OrderRepository.SelectOrdersByCustomerId(customerId);
-
-        if (orders == null || !orders.Any())
+        if (orders == null)
         {
-            throw new Exception("No orders found for the given customer.");
+            return new List<OrderGetDto>();
         }
 
-        return Mapper.Map<List<OrderGetDto>>(orders);
+        return orders.Select(o => Mapper.Map<OrderGetDto>(o)).ToList();
     }
 }
 
