@@ -10,6 +10,4 @@ public class OrderProductGetDto
     public long ProductId { get; set; }
     public int Quantity { get; set; }
     public decimal PriceAtPurchase { get; set; }
-    public OrderGetDto? Order { get; set; }
-    public ProductGetDto? Product { get; set; }
 }

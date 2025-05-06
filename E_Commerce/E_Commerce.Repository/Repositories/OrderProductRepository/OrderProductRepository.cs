@@ -15,7 +15,7 @@ namespace E_Commerce.Repository.Repositories.OrderProductRepository
         {
             await MainContext.AddAsync(orderProduct);
             await MainContext.SaveChangesAsync();
-            return orderProduct.OrderProductId;
+            return orderProduct.OrderId;
         }
 
         public async Task<List<OrderProduct>> SelectOrderProductsByOrderIdAsync(long orderId)
