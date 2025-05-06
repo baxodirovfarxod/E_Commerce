@@ -23,6 +23,7 @@ using E_Commerce.Repository.Repositories.CardRepository;
 using E_Commerce.Repository.Repositories.CartProducts;
 using E_Commerce.Repository.Repositories.CartRepository;
 using E_Commerce.Repository.Repositories.CustomerRepository;
+using E_Commerce.Repository.Repositories.OrderProductRepository;
 using E_Commerce.Repository.Repositories.OrderRepository;
 using E_Commerce.Repository.Repositories.Payments;
 using E_Commerce.Repository.Repositories.ProductRepository;
@@ -76,6 +77,8 @@ public static class DependencyInjectionConfigurations
 
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
         builder.Services.AddScoped<IProductService, ProductService>();
+
+        builder.Services.AddScoped<IOrderProductRepository, OrderProductRepository>();
 
     }
 }

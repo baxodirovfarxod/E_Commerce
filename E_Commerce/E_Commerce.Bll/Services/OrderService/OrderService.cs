@@ -4,6 +4,7 @@ using E_Commerce.Bll.Dtos.OrderProductDTOs;
 using E_Commerce.Dal.Entities;
 using E_Commerce.Repository.Repositories.CartRepository;
 using E_Commerce.Repository.Repositories.CustomerRepository;
+using E_Commerce.Repository.Repositories.OrderProductRepository;
 using E_Commerce.Repository.Repositories.OrderRepository;
 using E_Commerce.Repository.Repositories.ProductRepository;
 using FluentValidation;
@@ -18,8 +19,9 @@ public class OrderService : IOrderService
     private readonly ICustomerRepository CustomerRepository;
     private readonly IProductRepository ProductRepository;
     private readonly ICartRepository CartRepository;
+    private readonly IOrderProductRepository OrderProductRepository;
 
-    public OrderService(IOrderRepository orderRepository, IMapper mapper, IValidator<OrderCreateDto> orderCreateDtoValidator, ICustomerRepository customerRepository, ICartRepository cartRepository, IProductRepository productRepository)
+    public OrderService(IOrderRepository orderRepository, IMapper mapper, IValidator<OrderCreateDto> orderCreateDtoValidator, ICustomerRepository customerRepository, ICartRepository cartRepository, IProductRepository productRepository, IOrderProductRepository orderProductRepository)
     {
         OrderRepository = orderRepository;
         Mapper = mapper;
@@ -27,6 +29,7 @@ public class OrderService : IOrderService
         CustomerRepository = customerRepository;
         CartRepository = cartRepository;
         ProductRepository = productRepository;
+        OrderProductRepository = orderProductRepository;
     }
 
     public async Task<OrderGetDto> CreateOrderAsync(OrderCreateDto orderCreateDto)
@@ -83,6 +86,7 @@ public class OrderService : IOrderService
             orderProducts.Add(orderProduct);
             cartProduct.Product.StockQuantity -= cartProduct.Quantity;
             await ProductRepository.UpdateProductAsync(cartProduct.Product);
+            await OrderProductRepository.InsertOrderProductAsync(orderProduct);
         }
 
         await CartRepository.ClearCartAsync(customer.CustomerId);
