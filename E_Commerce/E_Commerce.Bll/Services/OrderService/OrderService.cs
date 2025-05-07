@@ -76,6 +76,10 @@ public class OrderService : IOrderService
         var orderProducts = new List<OrderProduct>();
         foreach (var cartProduct in cart.CartProducts)
         {
+            if (cartProduct.Quantity > cartProduct.Product.StockQuantity)
+            {
+                throw new Exception("Product stockQuantity yetarli emas !");
+            }
             var orderProduct = new OrderProduct()
             {
                 OrderId = orderId,
