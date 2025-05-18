@@ -101,5 +101,10 @@ public class ProductService : IProductService
 
         return Mapper.Map<ProductGetDto>(product);
     }
+
+    public async Task<long> GetAllProductsCount()
+    {
+        return await ProductRepository.SelectAllProductsCount();
+    }
 }
 
