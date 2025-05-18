@@ -35,6 +35,13 @@ public class ProductRepository : IProductRepository
                    .ToListAsync();
     }
 
+    public async Task<long> SelectAllProductsCount()
+    {
+        return await MainContext.Products
+            .Where(p => !p.IsDeleted)
+            .CountAsync();
+    }
+
     public async Task<Product?> SelectProductByIdAsync(long productId)
     {
         return await MainContext.Products

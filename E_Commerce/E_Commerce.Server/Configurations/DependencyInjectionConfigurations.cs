@@ -27,6 +27,7 @@ using E_Commerce.Repository.Repositories.OrderProductRepository;
 using E_Commerce.Repository.Repositories.OrderRepository;
 using E_Commerce.Repository.Repositories.Payments;
 using E_Commerce.Repository.Repositories.ProductRepository;
+using E_Commerce.Server.Filters;
 using FluentValidation;
 using static E_Commerce.Bll.Validators.ProductValidator.ProductCreateValidator;
 
@@ -79,6 +80,9 @@ public static class DependencyInjectionConfigurations
         builder.Services.AddScoped<IProductService, ProductService>();
 
         builder.Services.AddScoped<IOrderProductRepository, OrderProductRepository>();
+
+        builder.Services.AddScoped<ProductCountHeaderFilter>();
+        builder.Services.AddScoped<UserAgentFilter>();
 
     }
 }

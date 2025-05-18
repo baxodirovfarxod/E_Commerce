@@ -10,4 +10,5 @@ public interface IProductRepository
     Task SoftDeleteProductAsync(long productId);
     Task<List<Product>> SelectAllProductsAsync(int skip, int take);
     Task<bool> ExistsByNameAsync(string name );
+    Task<long> SelectAllProductsCount();
 }

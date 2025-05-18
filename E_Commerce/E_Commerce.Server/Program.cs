@@ -1,6 +1,7 @@
 
 using E_Commerce.Server.Configurations;
 
+
 namespace E_Commerce.Server
 {
     public class Program
@@ -11,8 +12,10 @@ namespace E_Commerce.Server
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddControllers(options =>
+            {
+                
+            });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 

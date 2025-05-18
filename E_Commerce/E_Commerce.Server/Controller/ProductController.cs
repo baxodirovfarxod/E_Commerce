@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Bll.Dtos.ProductDTOs;
 using E_Commerce.Bll.Services.ProductService;
+using E_Commerce.Server.Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerce.Server.Controller
@@ -9,7 +10,6 @@ namespace E_Commerce.Server.Controller
     public class ProductController : ControllerBase
     {
         private readonly IProductService ProductService;
-
         public ProductController(IProductService productService)
         {
             ProductService = productService;
@@ -28,6 +28,7 @@ namespace E_Commerce.Server.Controller
         }
 
         [HttpGet("getAll")]
+        [ServiceFilter(typeof(ProductCountHeaderFilter))]
         public Task<List<ProductGetDto>> GetAllProductsAsync(int skip, int take)
         {
             return ProductService.GetAllProductsAsync(skip, take);
